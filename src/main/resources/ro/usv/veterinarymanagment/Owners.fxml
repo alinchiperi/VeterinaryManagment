@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="519.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.usv.veterinarymanagment.Owners">
+   <children>
+      <Pane prefHeight="102.0" prefWidth="775.0" style="-fx-background-color: #2d75e8;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="109.0" layoutY="14.0" text="OWNERS">
+               <font>
+                  <Font name="System Bold Italic" size="35.0" />
+               </font>
+            </Label>
+            <Label layoutX="109.0" layoutY="57.0" text="Veterinary Managment" />
+            <FontAwesomeIconView glyphName="MALE" layoutX="53.0" layoutY="67.0" size="55" />
+         </children>
+      </Pane>
+      <SplitPane dividerPositions="0.439728779507785" layoutX="188.0" layoutY="103.0" prefHeight="416.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="103.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" layoutX="44.0" layoutY="47.0" spacing="20.0">
+                     <children>
+                        <HBox layoutX="10.0" layoutY="10.0" spacing="60.0">
+                           <children>
+                              <Label text="ID" />
+                              <TextField id="txtID" fx:id="txtId" disable="true" />
+                           </children>
+                        </HBox>
+                        <HBox spacing="10.0">
+                           <children>
+                              <Label text="First Name" />
+                              <TextField fx:id="txtFirstName" />
+                           </children>
+                        </HBox>
+                        <HBox spacing="10.0">
+                           <children>
+                              <Label text="Last Name" />
+                              <TextField fx:id="txtLastName" />
+                           </children>
+                        </HBox>
+                        <HBox spacing="35.0">
+                           <children>
+                              <Label text="Phone" />
+                              <TextField fx:id="txtPhone" />
+                           </children>
+                        </HBox>
+                        <HBox spacing="37.0">
+                           <children>
+                              <Label text="Email" />
+                              <TextField fx:id="txtEmail" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <HBox layoutX="26.0" layoutY="314.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addOwner" text="ADD" />
+                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#update" text="UPDATE" />
+                        <Button fx:id="btnDelete" mnemonicParsing="false" text="DELETE" />
+                        <Button fx:id="btnComplete" mnemonicParsing="false" onAction="#completeInput" text="Complete" />
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="399.0" prefWidth="410.0">
+               <children>
+                  <TableView fx:id="tblOwners" layoutX="61.0" layoutY="84.0" prefHeight="414.4" prefWidth="444.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="colId" prefWidth="54.400025963783264" text="ID" />
+                      <TableColumn fx:id="colFirstName" prefWidth="87.99999237060547" text="First Name" />
+                        <TableColumn fx:id="colLastName" prefWidth="83.199951171875" text="Last Name" />
+                        <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
+                        <TableColumn fx:id="colEmail" prefWidth="142.39999389648438" text="Email" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
