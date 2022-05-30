@@ -1,19 +1,22 @@
 package ro.usv.veterinarymanagment;
 
 import javafx.application.Application;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ro.usv.veterinarymanagment.DataModel.Owner;
+
+import java.io.IOException;
 import java.sql.Connection;
 
 import java.net.URL;
@@ -22,6 +25,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class Owners extends Application implements Initializable {
@@ -113,15 +117,16 @@ public class Owners extends Application implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
        public void completeInput() {
         Owner own = tblOwners.getSelectionModel().getSelectedItem();
-        txtId.setText(String.valueOf(own.getId()));
-        txtFirstName.setText(own.getFirstName());
-        txtLastName.setText(own.getLastName());
-        txtPhone.setText(own.getPhone());
-        txtEmail.setText(own.getEmail());
+        if(own!=null) {
+            txtId.setText(String.valueOf(own.getId()));
+            txtFirstName.setText(own.getFirstName());
+            txtLastName.setText(own.getLastName());
+            txtPhone.setText(own.getPhone());
+            txtEmail.setText(own.getEmail());
+        }
     }
 
     public void update(ActionEvent event)
@@ -160,6 +165,9 @@ public class Owners extends Application implements Initializable {
                 {
                     System.out.println("Update cu succes");
 
+                    tblOwners.setItems(getOwners());
+                    clearInput();
+
                 }
                 else {
                     System.out.println("eroare");
@@ -174,6 +182,47 @@ public class Owners extends Application implements Initializable {
                 e.printStackTrace();
             }
         }
+    }
+    public void delete(){
+        Owner ownerForDelete = tblOwners.getSelectionModel().getSelectedItem();
+            if (ownerForDelete == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Select an owner");
+                alert.setContentText("Please select an owner and press DELETE");
+                alert.show();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete owner");
+                alert.setContentText("Do you want delete "+ ownerForDelete.getFirstName()+" "+ ownerForDelete.getLastName()+" ?");
+                Optional <ButtonType> confirmation = alert.showAndWait();
+                if(confirmation.get() == ButtonType.OK)
+                {
+
+                    try{
+                        Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+                        conn = DriverManager.getConnection(jdbcURL, user, passwd);
+                        stmt = conn.createStatement();
+
+                        String sqlDelete = "DELETE from owners_31a_ca WHERE id_owner= "+ownerForDelete.getId();
+                        System.out.println(sqlDelete);
+
+                        int rezult =stmt.executeUpdate(sqlDelete);
+                        if(rezult>0)
+                        {
+                            System.out.println("delete successful");
+                            clearInput();
+                            tblOwners.setItems(getOwners());
+                        }
+                        else {
+                            System.out.println("eroare");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+            }
     }
 
     public void clearInput() {
@@ -206,6 +255,74 @@ public class Owners extends Application implements Initializable {
         return list;
     }
 
+    public void viewAllOwners(){
+        tblOwners.setItems(getOwners());
+    }
+
+    public void findOwner(){
+        String firstName = txtFirstName.getText();
+        String lastName = txtLastName.getText();
+        ObservableList<Owner> list = FXCollections.observableArrayList();
+
+        if(!firstName.equals("") && !lastName.equals(""))
+        {
+            try{
+                Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+                conn = DriverManager.getConnection(jdbcURL, user, passwd);
+                stmt = conn.createStatement();
+                String sqlCommand = "Select * from owners_31a_ca where ";
+                sqlCommand += "UPPER('"+ firstName+"')= UPPER(first_name) AND  UPPER(last_name) = UPPER('"+lastName+"')";
+                rs=stmt.executeQuery(sqlCommand);
+                while (rs.next())
+                {
+                    list.add(new Owner(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+
+                }
+                tblOwners.setItems(list);
+                clearInput();
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Find Owner");
+            alert.setContentText("Please complete first name and last name ");
+            alert.show();
+        }
+    }
+    public void addPet(ActionEvent event) throws IOException {
+
+        Parent root ;
+        Scene scene ;
+        Stage stage;
+        String ownId = txtId.getText();
+        if(!ownId.equals("")){
+            System.out.println(ownId);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Animals.fxml"));
+            root = loader.load();
+            System.out.println(root);
+            Animals animals = loader.getController();
+            animals.completeOwner(ownId);
+            System.out.println(animals);
+
+            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            scene= new Scene(root);
+
+            stage.setScene(scene);
+            stage.show();
+
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Select an owner");
+            alert.setContentText("Please select an owner");
+            alert.show();
+        }
+
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -214,7 +331,6 @@ public class Owners extends Application implements Initializable {
             colLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
             colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
             colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-
 
             ObservableList<Owner> list = getOwners();
             tblOwners.setItems(list);
@@ -225,6 +341,7 @@ public class Owners extends Application implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void start(Stage stage) throws Exception {
