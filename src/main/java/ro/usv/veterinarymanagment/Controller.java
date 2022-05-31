@@ -59,10 +59,5 @@ public class Controller implements Initializable {
 
     }
 
-    public static class Animals {
 
-        @FXML
-        TextField txtId;
-
-    }
 }

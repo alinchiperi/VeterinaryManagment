@@ -77,6 +77,7 @@
                         <Button fx:id="btnFind" mnemonicParsing="false" onAction="#findOwner" text="Find" />
                         <Button fx:id="btnAddPett" mnemonicParsing="false" onAction="#addPet" text="Add Pet" />
                         <Button fx:id="btnViewAll" mnemonicParsing="false" onAction="#viewAllOwners" text="View All " />
+                        <Button fx:id="btnFindPets" mnemonicParsing="false" text="Find Pets" />
                      </children>
                   </HBox>
                </children>
@@ -89,7 +90,7 @@
                       <TableColumn fx:id="colFirstName" prefWidth="87.99999237060547" text="First Name" />
                         <TableColumn fx:id="colLastName" prefWidth="83.199951171875" text="Last Name" />
                         <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
-                        <TableColumn fx:id="colEmail" prefWidth="142.39999389648438" text="Email" />
+                        <TableColumn fx:id="colEmail" prefWidth="141.59994506835938" text="Email" />
                     </columns>
                   </TableView>
                </children></AnchorPane>

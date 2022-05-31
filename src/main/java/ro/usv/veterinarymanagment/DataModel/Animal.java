@@ -1,19 +1,21 @@
 package ro.usv.veterinarymanagment.DataModel;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Animal {
     int id;
     String name;
-    Date birthDare;
+    String birthDate;
     float weight;
+
     String species;
     int ownerId;
 
-    public Animal(int id, String name, Date birthDare, float weight, String species, int ownerId) {
+    public Animal(int id, String name, String birthDate, float weight, String species, int ownerId) {
         this.id = id;
         this.name = name;
-        this.birthDare = birthDare;
+        this.birthDate = birthDate;
         this.weight = weight;
         this.species = species;
         this.ownerId = ownerId;
@@ -35,12 +37,12 @@ public class Animal {
         this.name = name;
     }
 
-    public Date getBirthDare() {
-        return birthDare;
+    public String getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthDare(Date birthDare) {
-        this.birthDare = birthDare;
+    public void setBirthDate(String birthDare) {
+        this.birthDate = birthDare;
     }
 
     public float getWeight() {
@@ -65,5 +67,17 @@ public class Animal {
 
     public void setOwnerId(int ownerId) {
         this.ownerId = ownerId;
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthDate=" + birthDate +
+                ", weight=" + weight +
+                ", species='" + species + '\'' +
+                ", ownerId=" + ownerId +
+                '}';
     }
 }

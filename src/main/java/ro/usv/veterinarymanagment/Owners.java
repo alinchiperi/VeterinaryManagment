@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class Owners extends Application implements Initializable {
+public class Owners implements Initializable {
 
     String jdbcURL = "jdbc:oracle:thin:@80.96.123.131:1521:ora09";
 
@@ -156,8 +156,6 @@ public class Owners extends Application implements Initializable {
 
                 sqlCommand += " WHERE id_owner= "+id;
 
-                System.out.println(sqlCommand);
-
                 int rezult = stmt.executeUpdate(sqlCommand);
 
                 System.out.println("rezult = " + rezult);
@@ -224,7 +222,6 @@ public class Owners extends Application implements Initializable {
                 }
             }
     }
-
     public void clearInput() {
         txtId.setText("");
         txtFirstName.setText("");
@@ -276,11 +273,9 @@ public class Owners extends Application implements Initializable {
                 while (rs.next())
                 {
                     list.add(new Owner(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
-
                 }
                 tblOwners.setItems(list);
                 clearInput();
-
             }
             catch (Exception e)
             {
@@ -299,29 +294,23 @@ public class Owners extends Application implements Initializable {
         Parent root ;
         Scene scene ;
         Stage stage;
-        String ownId = txtId.getText();
-        if(!ownId.equals("")){
-            System.out.println(ownId);
+        Owner owner = tblOwners.getSelectionModel().getSelectedItem();
+        if(owner!=null){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Animals.fxml"));
             root = loader.load();
-            System.out.println(root);
             Animals animals = loader.getController();
-            animals.completeOwner(ownId);
-            System.out.println(animals);
-
+            animals.completeOwner(owner.getId()+" "+ owner.getLastName()+" "+owner.getFirstName());
             stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             scene= new Scene(root);
-
             stage.setScene(scene);
             stage.show();
-
-        }else {
+        }
+        else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Select an owner");
             alert.setContentText("Please select an owner");
             alert.show();
         }
-
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -331,7 +320,6 @@ public class Owners extends Application implements Initializable {
             colLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
             colPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
             colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-
             ObservableList<Owner> list = getOwners();
             tblOwners.setItems(list);
 
@@ -342,13 +330,4 @@ public class Owners extends Application implements Initializable {
         }
     }
 
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        AnchorPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Owners.fxml")));
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        btnUpdate.setOnAction(a-> System.out.println("Alin"));
-    }
 }
