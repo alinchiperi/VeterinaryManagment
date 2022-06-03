@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import ro.usv.veterinarymanagment.DataModel.Animal;
+import ro.usv.veterinarymanagment.DataModel.Visit;
 
 import java.io.IOException;
 import java.net.URL;
@@ -60,11 +61,11 @@ public class Animals implements Initializable {
     TextField txtWeight;
     @FXML
     TextField txtSpecies;
+    @FXML Label lblTotal;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-    public void completeOwner(String nameOwner)
-    {
+    public void completeOwner(String nameOwner) {
 
         txtOwner.setText(nameOwner );
     }
@@ -200,8 +201,7 @@ public class Animals implements Initializable {
 
         }
     }
-    public ObservableList<Animal> getAnimals()
-    {
+    public ObservableList<Animal> getAnimals() {
         ObservableList<Animal> list = FXCollections.observableArrayList();
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
@@ -221,11 +221,11 @@ public class Animals implements Initializable {
         {
             e.printStackTrace();
         }
+        setLabelTotal(String.valueOf(list.size()));
         return list;
 
     }
-    public void deleteAnimal()
-    {
+    public void deleteAnimal() {
         Animal animalForDelete = tblAnimals.getSelectionModel().getSelectedItem();
         if(animalForDelete==null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -247,7 +247,6 @@ public class Animals implements Initializable {
                     stmt = conn.createStatement();
 
                     String sqlDelete = "DELETE from animals_31a_ca WHERE id_animal= "+animalForDelete.getId();
-                    System.out.println(sqlDelete);
 
                     int rezult =stmt.executeUpdate(sqlDelete);
                     if(rezult>0)
@@ -285,8 +284,77 @@ public class Animals implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    public void setLabelTotal(String total){
+        lblTotal.setText("Total: "+total);
+    }
+    public void viewOwner(ActionEvent event) throws IOException {
+        Parent root ;
+        Scene scene ;
+        Stage stage;
+        Animal animalSelected = tblAnimals.getSelectionModel().getSelectedItem();
+        if(animalSelected!=null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Owners.fxml"));
+            root = loader.load();
+            Owners owners = loader.getController();
+            owners.showOwner(animalSelected.getOwnerId());
+            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            scene= new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+    public void showAnimal(int id) {
+        ObservableList <Animal> list= FXCollections.observableArrayList();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+            conn = DriverManager.getConnection(jdbcURL, user, passwd);
+            stmt = conn.createStatement();
+            String sqlCommand= "Select * from animals_31a_ca WHERE id_animal= "+id;
+            rs = stmt.executeQuery(sqlCommand);
+            while (rs.next()) {
+                Animal animal =(new Animal(Integer.parseInt(rs.getString(1)), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),rs.getInt(6) ));
+                list.add(animal);
+            }
+            tblAnimals.setItems(list);
+            setLabelTotal(String.valueOf(list.size()));
+            stmt.close();
+            rs.close();
+            conn.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
     }
+    public void findOwnerPets(int id) {
+        ObservableList <Animal> list= FXCollections.observableArrayList();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+            conn = DriverManager.getConnection(jdbcURL, user, passwd);
+            stmt = conn.createStatement();
+            String sqlCommand= "Select * from animals_31a_ca WHERE id_owner= "+id;
+            rs = stmt.executeQuery(sqlCommand);
+            while (rs.next()) {
+                Animal animal =(new Animal(Integer.parseInt(rs.getString(1)), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),rs.getInt(6) ));
+                list.add(animal);
+            }
+            tblAnimals.setItems(list);
+            setLabelTotal(String.valueOf(list.size()));
+            stmt.close();
+            rs.close();
+            conn.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{

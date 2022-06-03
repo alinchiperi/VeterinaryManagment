@@ -84,7 +84,8 @@
                         <HBox spacing="20.0">
                            <children>
                               <Button fx:id="btnComplete" mnemonicParsing="false" onAction="#completeInput" text="Complete" />
-                              <Button mnemonicParsing="false" text="Button" />
+                              <Button mnemonicParsing="false" onAction="#viewOwner" text="View Owner" />
+                              <Button fx:id="btnAddVisit" mnemonicParsing="false" onAction="#addVisit" text="VISIT" />
                            </children>
                         </HBox>
                      </children>
@@ -93,7 +94,7 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="399.0" prefWidth="410.0">
                <children>
-                  <TableView fx:id="tblAnimals" layoutX="61.0" layoutY="84.0" prefHeight="414.4" prefWidth="444.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tblAnimals" layoutX="61.0" layoutY="84.0" prefHeight="366.0" prefWidth="444.0" stylesheets="@../../../css/style.css" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="colId" prefWidth="58.399964928627014" text="Id" />
                       <TableColumn fx:id="colName" prefWidth="91.99999237060547" text="Name" />
@@ -103,6 +104,11 @@
                         <TableColumn fx:id="colOwnId" prefWidth="75.0" text="Owner id" />
                     </columns>
                   </TableView>
+                  <Label fx:id="lblTotal" layoutX="14.0" layoutY="366.0" text="Total:">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Label>
                </children></AnchorPane>
         </items>
       </SplitPane>

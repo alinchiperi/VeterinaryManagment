@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="741.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.usv.veterinarymanagment.Visits">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="761.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.usv.veterinarymanagment.Visits">
    <children>
       <Pane layoutX="-18.0" prefHeight="102.0" prefWidth="775.0" style="-fx-background-color: #2d75e8;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -29,7 +29,7 @@
             <FontAwesomeIconView glyphName="CHECK_CIRCLE" layoutX="53.0" layoutY="67.0" size="55" />
          </children>
       </Pane>
-      <SplitPane dividerPositions="0.4637837837837837" layoutX="-2.0" layoutY="100.0" prefHeight="434.0" prefWidth="741.0">
+      <SplitPane dividerPositions="0.4637837837837837" layoutX="-2.0" layoutY="100.0" prefHeight="434.0" prefWidth="761.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="433.0" prefWidth="326.0">
                <children>
@@ -66,20 +66,30 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <Button layoutX="49.0" layoutY="346.0" mnemonicParsing="false" onAction="#addVisit" text="Add Visit" />
-                  <Button layoutX="134.0" layoutY="346.0" mnemonicParsing="false" onAction="#deleteVisit" text="Delete Visit" />
-                  <Button layoutX="226.0" layoutY="346.0" mnemonicParsing="false" onAction="#updateVisit" text="Update Visit" />
-                  <Button layoutX="55.0" layoutY="386.0" mnemonicParsing="false" onAction="#completeInput" text="Complete" />
+                  <HBox layoutX="49.0" layoutY="346.0" spacing="20.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#addVisit" text="Add Visit" />
+                        <Button mnemonicParsing="false" onAction="#deleteVisit" text="Delete Visit" />
+                        <Button mnemonicParsing="false" onAction="#updateVisit" text="Update Visit" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="49.0" layoutY="384.0" spacing="20.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#completeInput" text="Complete" />
+                        <Button mnemonicParsing="false" onAction="#viewPet" text="View Pet" />
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="433.0" prefWidth="408.0">
                <children>
-                  <TableView fx:id="tblVisits" layoutX="-13.0" layoutY="123.0" prefHeight="376.0" prefWidth="394.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tblVisits" prefHeight="384.0" prefWidth="405.0" stylesheets="@../../../css/style.css" AnchorPane.bottomAnchor="49.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn fx:id="colId" prefWidth="75.0" text="Id" />
-                        <TableColumn fx:id="colAnimalId" prefWidth="80.7999267578125" text="Animal" />
-                      <TableColumn fx:id="colObs" prefWidth="87.199951171875" text="Obs" />
-                        <TableColumn fx:id="colDate" prefWidth="86.39988708496094" text="Date" />
+                      <TableColumn fx:id="colId" prefWidth="64.7999267578125" text="Id" />
+                        <TableColumn fx:id="colName" prefWidth="103.20004272460938" text="Name" />
+                      <TableColumn fx:id="colObs" prefWidth="81.5999755859375" text="Obs" />
+                        <TableColumn fx:id="colDate" prefWidth="86.39996337890625" text="Date" />
+                        <TableColumn fx:id="colAnimalId" prefWidth="80.7999267578125" text="Id Animal" />
                     </columns>
                   </TableView>
                   <Label fx:id="lblTotal" layoutX="21.0" layoutY="380.0" text="Total:">

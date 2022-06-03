@@ -7,7 +7,7 @@ public class Visit {
     int animalID;
     String date;
     String obs;
-    String name;
+    String animalName;
 
     public Visit(int id, int animalID,  String obs, String date) {
         this.id = id;
@@ -16,12 +16,12 @@ public class Visit {
         this.obs = obs;
     }
 
-    public Visit(int id, int animalID, String date, String obs, String name) {
+    public Visit(int id, int animalID, String obs, String date,String name) {
         this.id = id;
         this.animalID = animalID;
         this.date = date;
         this.obs = obs;
-        this.name = name;
+        this.animalName = name;
     }
 
     public int getId() {
@@ -54,5 +54,20 @@ public class Visit {
 
     public void setObs(String obs) {
         this.obs = obs;
+    }
+
+    public String getAnimalName() {
+        return animalName;
+    }
+
+    @Override
+    public String toString() {
+        return "Visit{" +
+                "id=" + id +
+                ", animalID=" + animalID +
+                ", date='" + date + '\'' +
+                ", obs='" + obs + '\'' +
+                ", animalName='" + animalName + '\'' +
+                '}';
     }
 }

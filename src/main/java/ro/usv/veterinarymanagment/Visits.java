@@ -2,12 +2,19 @@ package ro.usv.veterinarymanagment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import ro.usv.veterinarymanagment.DataModel.Visit;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -43,10 +50,9 @@ public class Visits implements Initializable {
     @FXML TableColumn<Visit, String> colObs;
     @FXML TableColumn<Visit, String> colDate;
     @FXML CheckBox ckbToday;
-
+    @FXML TableColumn<Visit, String>colName;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
 
     public void completeIdAnimal(String name)
     {
@@ -118,6 +124,7 @@ public class Visits implements Initializable {
     }
     public void completeInput(){
         Visit visit= tblVisits.getSelectionModel().getSelectedItem();
+        System.out.println(visit);
         if(visit!=null){
             txtId.setText(String.valueOf(visit.getId()));
             txtAnimalId.setText(String.valueOf(visit.getAnimalID()));
@@ -229,11 +236,11 @@ public class Visits implements Initializable {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
             conn = DriverManager.getConnection(jdbcURL, user, passwd);
             stmt = conn.createStatement();
-            String sqlCommand = "select * from visits_31a_ca";
+            String sqlCommand = "select v.*, a.name from visits_31a_ca v, animals_31a_ca a Where v.id_animal=a.id_animal";
             rs = stmt.executeQuery(sqlCommand);
 
             while (rs.next()){
-                list.add(new Visit(rs.getInt(1), rs.getInt(2),rs.getString(3), rs.getString(4)));
+                list.add(new Visit(rs.getInt(1), rs.getInt(2),rs.getString(3), rs.getString(4), rs.getString(5)));
             }
             stmt.close();
             rs.close();
@@ -245,6 +252,22 @@ public class Visits implements Initializable {
         lblTotal.setText("Total: "+list.size());
         return list;
     }
+    public void viewPet(ActionEvent event) throws IOException {
+        Parent root ;
+        Scene scene ;
+        Stage stage;
+        Visit visitSelected = tblVisits.getSelectionModel().getSelectedItem();
+        if(visitSelected!=null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Animals.fxml"));
+            root = loader.load();
+            Animals animals = loader.getController();
+            animals.showAnimal(visitSelected.getAnimalID());
+            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            scene= new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -254,6 +277,7 @@ public class Visits implements Initializable {
         colAnimalId.setCellValueFactory(new PropertyValueFactory<>("animalID"));
         colObs.setCellValueFactory(new PropertyValueFactory<>("obs"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("animalName"));
         tblVisits.setItems(getVisits());
     }
 }

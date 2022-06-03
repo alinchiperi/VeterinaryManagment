@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import ro.usv.veterinarymanagment.DataModel.Animal;
 import ro.usv.veterinarymanagment.DataModel.Owner;
 
 import java.io.IOException;
@@ -58,6 +59,8 @@ public class Owners implements Initializable {
     TableColumn<Owner, String> colEmail;
     @FXML
     Button btnUpdate;
+    @FXML
+    Label lblTotal;
 
     public void addOwner() {
         try {
@@ -115,7 +118,7 @@ public class Owners implements Initializable {
             e.printStackTrace();
         }
     }
-       public void completeInput() {
+    public void completeInput() {
         Owner own = tblOwners.getSelectionModel().getSelectedItem();
         if(own!=null) {
             txtId.setText(String.valueOf(own.getId()));
@@ -125,8 +128,7 @@ public class Owners implements Initializable {
             txtEmail.setText(own.getEmail());
         }
     }
-    public void update()
-    {
+    public void update() {
         String id = txtId.getText();
 
         String firstName =txtFirstName.getText();
@@ -245,6 +247,8 @@ public class Owners implements Initializable {
         {
             e.printStackTrace();
         }
+        setLabelTotal(String.valueOf(list.size()));
+
         return list;
     }
 
@@ -308,6 +312,48 @@ public class Owners implements Initializable {
             alert.show();
         }
     }
+    public void showOwner(int id) {
+        ObservableList <Owner> list= FXCollections.observableArrayList();
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+            conn = DriverManager.getConnection(jdbcURL, user, passwd);
+            stmt = conn.createStatement();
+            String sqlCommand= "Select * from owners_31a_ca WHERE id_owner= "+id;
+            rs = stmt.executeQuery(sqlCommand);
+            while (rs.next()) {
+                list.add(new Owner(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+            }
+            tblOwners.setItems(list);
+            stmt.close();
+            rs.close();
+            conn.close();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    public void findPets(ActionEvent event) throws IOException {
+        Parent root;
+        Scene scene;
+        Stage stage;
+        Owner ownerPets = tblOwners.getSelectionModel().getSelectedItem();
+        if (ownerPets != null) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Animals.fxml"));
+            root = loader.load();
+            Animals animals = loader.getController();
+            animals.findOwnerPets(ownerPets.getId());
+
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
+    public void setLabelTotal(String total){
+        lblTotal.setText("Total: "+total);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {

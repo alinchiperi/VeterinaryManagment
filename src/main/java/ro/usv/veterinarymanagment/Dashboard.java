@@ -45,14 +45,13 @@ public class Dashboard implements Initializable {
             {
                 lblOwners.setText(String.valueOf(rs.getInt(1)));
             }
-            /*String sqlCountVisits="select count(*)as total from owners_31a_ca";
+            String sqlCountVisits="select count(*)as total from visits_31a_ca";
 
-            rs=stmt.executeQuery(sqlCountOwners);
+            rs=stmt.executeQuery(sqlCountVisits);
             if(rs.next())
             {
-                lblOwners.setText(String.valueOf(rs.getInt(1)));
-            }*/
-
+                lblVisits.setText(String.valueOf(rs.getInt(1)));
+            }
 
         }
         catch (Exception e){
