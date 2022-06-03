@@ -84,7 +84,7 @@
                         <HBox spacing="20.0">
                            <children>
                               <Button fx:id="btnComplete" mnemonicParsing="false" onAction="#completeInput" text="Complete" />
-                              <Button mnemonicParsing="false" text="Button" />
+                              <Button fx:id="btnAddVisit" mnemonicParsing="false" onAction="#addVisit" text="VISIT" />
                            </children>
                         </HBox>
                      </children>

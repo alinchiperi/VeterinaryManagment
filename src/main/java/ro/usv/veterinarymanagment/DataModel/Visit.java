@@ -1,18 +1,27 @@
 package ro.usv.veterinarymanagment.DataModel;
 
-import java.util.Date;
+
 
 public class Visit {
     int id;
     int animalID;
-    Date date;
+    String date;
     String obs;
+    String name;
 
-    public Visit(int id, int animalID, Date date, String obs) {
+    public Visit(int id, int animalID,  String obs, String date) {
         this.id = id;
         this.animalID = animalID;
         this.date = date;
         this.obs = obs;
+    }
+
+    public Visit(int id, int animalID, String date, String obs, String name) {
+        this.id = id;
+        this.animalID = animalID;
+        this.date = date;
+        this.obs = obs;
+        this.name = name;
     }
 
     public int getId() {
@@ -31,11 +40,11 @@ public class Visit {
         this.animalID = animalID;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

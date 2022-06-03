@@ -1,6 +1,5 @@
 package ro.usv.veterinarymanagment;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ro.usv.veterinarymanagment.DataModel.Owner;
 
@@ -24,7 +22,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -62,7 +59,7 @@ public class Owners implements Initializable {
     @FXML
     Button btnUpdate;
 
-    public void addOwner(ActionEvent event) {
+    public void addOwner() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
             conn = DriverManager.getConnection(jdbcURL, user, passwd);
@@ -128,8 +125,7 @@ public class Owners implements Initializable {
             txtEmail.setText(own.getEmail());
         }
     }
-
-    public void update(ActionEvent event)
+    public void update()
     {
         String id = txtId.getText();
 

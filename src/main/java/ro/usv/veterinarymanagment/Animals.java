@@ -2,18 +2,24 @@ package ro.usv.veterinarymanagment;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import ro.usv.veterinarymanagment.DataModel.Animal;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -72,8 +78,6 @@ public class Animals implements Initializable {
 
             int id=0;
             String name = txtName.getText();
-
-
             LocalDate date = datePick.getValue();
             String bDate=formatter.format(date);
 
@@ -81,7 +85,7 @@ public class Animals implements Initializable {
             String species = txtSpecies.getText();
             String owner=txtOwner.getText().split(" ")[0];
 
-            if(owner.equals("")&& weight.equals("")&& species.equals("") && name.equals(""))
+            if(owner.equals("")&& weight.equals("")&& species.equals("") && name.equals("") && !txtId.getText().equals(""))
             {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Input fields empty");
@@ -137,6 +141,7 @@ public class Animals implements Initializable {
             txtId.setText(String.valueOf(animalSelected.getId()));
             txtName.setText(animalSelected.getName());
 //            datePick.setValue(LocalDate.parse(animalSelected.getBirthDate()));
+            datePick.getEditor().setText(animalSelected.getBirthDate().substring(0,10));
             txtSpecies.setText(animalSelected.getSpecies());
             txtWeight.setText(String.valueOf(animalSelected.getWeight()));
         }
@@ -153,8 +158,8 @@ public class Animals implements Initializable {
         if(id.equals(""))
         {
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Select an pet");
-            alert.setContentText("Please select an owner and press COMPLETE");
+            alert.setTitle("Select a pet");
+            alert.setContentText("Please select an animal and press COMPLETE");
             alert.show();
         }
         else {
@@ -169,7 +174,6 @@ public class Animals implements Initializable {
                 sqlCommand+= " WHERE id_animal ="+id;
 
                 System.out.println(sqlCommand);
-
 
                 int rezult = stmt.executeUpdate(sqlCommand);
 
@@ -196,7 +200,6 @@ public class Animals implements Initializable {
 
         }
     }
-
     public ObservableList<Animal> getAnimals()
     {
         ObservableList<Animal> list = FXCollections.observableArrayList();
@@ -218,7 +221,6 @@ public class Animals implements Initializable {
         {
             e.printStackTrace();
         }
-
         return list;
 
     }
@@ -257,6 +259,9 @@ public class Animals implements Initializable {
                     else {
                         System.out.println("eroare");
                     }
+                    stmt.close();
+                    rs.close();
+                    conn.close();
                 }
                 catch (Exception e)
                 {
@@ -264,6 +269,23 @@ public class Animals implements Initializable {
                 }
             }
         }
+    }
+    public void addVisit(ActionEvent event) throws IOException {
+        Parent root ;
+        Scene scene ;
+        Stage stage;
+        Animal animalForVisit = tblAnimals.getSelectionModel().getSelectedItem();
+        if(animalForVisit!=null){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Visits.fxml"));
+            root = loader.load();
+            Visits visits = loader.getController();
+            visits.completeIdAnimal(animalForVisit.getId()+" "+animalForVisit.getName());
+            stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            scene= new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -14,8 +14,6 @@ module ro.usv.veterinarymanagment {
 
     opens ro.usv.veterinarymanagment to javafx.fxml;
     exports ro.usv.veterinarymanagment;
-    exports ro.usv.veterinarymanagment.UserInterface;
-    opens ro.usv.veterinarymanagment.UserInterface to javafx.fxml;
     //add
     opens ro.usv.veterinarymanagment.DataModel to javafx.base;
 }
