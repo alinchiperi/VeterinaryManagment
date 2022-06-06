@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="649.0" prefWidth="828.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.usv.veterinarymanagment.Dashboard">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="894.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.usv.veterinarymanagment.Dashboard">
    <children>
       <Pane layoutX="7.0" layoutY="7.0" prefHeight="118.0" prefWidth="776.0" style="-fx-background-color: #2D75E8;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -66,5 +67,20 @@
             </Pane>
          </children>
       </VBox>
+      <Pane layoutX="269.0" layoutY="143.0" prefHeight="145.0" prefWidth="158.0" style="-fx-background-color: #b50c04;">
+         <children>
+            <Label fx:id="lblSpecies" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="22.0" prefHeight="51.0" prefWidth="59.0" text="0" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" layoutX="28.0" layoutY="73.0" prefHeight="69.0" prefWidth="102.0" text="Different species" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <PieChart fx:id="pieChart" layoutX="275.0" layoutY="298.0" title="Species %" />
    </children>
 </AnchorPane>

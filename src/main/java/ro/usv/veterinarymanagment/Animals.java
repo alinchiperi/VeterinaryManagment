@@ -80,20 +80,22 @@ public class Animals implements Initializable {
             int id=0;
             String name = txtName.getText();
             LocalDate date = datePick.getValue();
-            String bDate=formatter.format(date);
+
 
             String weight = txtWeight.getText();
             String species = txtSpecies.getText();
-            String owner=txtOwner.getText().split(" ")[0];
 
-            if(owner.equals("")&& weight.equals("")&& species.equals("") && name.equals("") && !txtId.getText().equals(""))
+            if(txtOwner.getText().equals("")){
+                errorOwner();
+            }
+            else if( weight.equals("")&& species.equals("") && name.equals("") && !txtId.getText().equals(""))
             {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Input fields empty");
-                alert.setContentText("Please fill all input fields");
-                alert.show();
+               errorInput();
             }
             else {
+                String owner=txtOwner.getText().split(" ")[0];
+                String bDate=formatter.format(date);
+
                 String sqlIdSecventa = "select secventa_animal_31A_CA.NEXTVAL from dual";
                 rs = stmt.executeQuery(sqlIdSecventa);
 
@@ -168,26 +170,30 @@ public class Animals implements Initializable {
                 Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
                 conn = DriverManager.getConnection(jdbcURL, user, passwd);
                 stmt = conn.createStatement();
-                String sqlCommand = "UPDATE animals_31a_ca SET ";
 
-                sqlCommand+="name = '"+name+"', weight= "+weight+", species= '"+species +"'";
-
-                sqlCommand+= " WHERE id_animal ="+id;
-
-                System.out.println(sqlCommand);
-
-                int rezult = stmt.executeUpdate(sqlCommand);
-
-                if(rezult>0)
-                {
-                    System.out.println("Update cu succes");
-
-                    tblAnimals.setItems(getAnimals());
-                    clearInput();
-
+                if(weight.equals("")&& species.equals("") && name.equals("") && !txtId.getText().equals("")){
+                    errorInput();
                 }
                 else {
-                    System.out.println("eroare");
+                    String sqlCommand = "UPDATE animals_31a_ca SET ";
+
+                    sqlCommand += "name = '" + name + "', weight= " + weight + ", species= '" + species + "'";
+
+                    sqlCommand += " WHERE id_animal =" + id;
+
+                    System.out.println(sqlCommand);
+
+                    int rezult = stmt.executeUpdate(sqlCommand);
+
+                    if (rezult > 0) {
+                        System.out.println("Update cu succes");
+
+                        tblAnimals.setItems(getAnimals());
+                        clearInput();
+
+                    } else {
+                        System.out.println("eroare");
+                    }
                 }
                 stmt.close();
                 rs.close();
@@ -376,5 +382,16 @@ public class Animals implements Initializable {
         }
 
     }
+
+    void errorOwner(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Owner not found");
+        alert.setContentText("Please go to owners window and  select a owner");
+        alert.show();
+    }
+    void errorInput(){ Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Input fields empty");
+        alert.setContentText("Please fill all input fields");
+        alert.show();}
 }
 

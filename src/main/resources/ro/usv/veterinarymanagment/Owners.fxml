@@ -84,20 +84,24 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="399.0" prefWidth="410.0">
                <children>
-                  <TableView fx:id="tblOwners" layoutX="61.0" layoutY="84.0" prefHeight="374.0" prefWidth="444.0" stylesheets="@../../../css/style.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columns>
-                      <TableColumn fx:id="colId" prefWidth="54.400025963783264" text="ID" />
-                      <TableColumn fx:id="colFirstName" prefWidth="87.99999237060547" text="First Name" />
-                        <TableColumn fx:id="colLastName" prefWidth="83.199951171875" text="Last Name" />
-                        <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
-                        <TableColumn fx:id="colEmail" prefWidth="141.59994506835938" text="Email" />
-                    </columns>
-                  </TableView>
-                  <Label fx:id="lblTotal" layoutX="14.0" layoutY="374.0" prefHeight="30.0" prefWidth="98.0" text="Total:">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
+                  <VBox>
+                     <children>
+                        <TableView fx:id="tblOwners" prefHeight="374.0" prefWidth="444.0" stylesheets="@../../../css/style.css">
+                          <columns>
+                            <TableColumn fx:id="colId" prefWidth="54.400025963783264" text="ID" />
+                            <TableColumn fx:id="colFirstName" prefWidth="87.99999237060547" text="First Name" />
+                              <TableColumn fx:id="colLastName" prefWidth="83.199951171875" text="Last Name" />
+                              <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
+                              <TableColumn fx:id="colEmail" prefWidth="141.59994506835938" text="Email" />
+                          </columns>
+                        </TableView>
+                        <Label fx:id="lblTotal" prefHeight="30.0" prefWidth="98.0" text="Total:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children></AnchorPane>
         </items>
       </SplitPane>

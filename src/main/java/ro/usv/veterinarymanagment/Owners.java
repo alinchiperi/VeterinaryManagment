@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import ro.usv.veterinarymanagment.DataModel.Animal;
 import ro.usv.veterinarymanagment.DataModel.Owner;
 
 import java.io.IOException;
@@ -25,6 +24,7 @@ import java.sql.Statement;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
 public class Owners implements Initializable {
 
@@ -62,6 +62,14 @@ public class Owners implements Initializable {
     @FXML
     Label lblTotal;
 
+    String regexEmail = "^(.+)@(.+)$";
+    String regexPhone ="^(\\+4|)?(07[0-9]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?(\\s|\\.|\\-)?([0-9]{3}(\\s|\\.|\\-|)){2}$";
+    public static boolean patternMatches(String emailAddress, String regexPattern) {
+        return Pattern.compile(regexPattern)
+                .matcher(emailAddress)
+                .matches();
+    }
+
     public void addOwner() {
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
@@ -75,11 +83,14 @@ public class Owners implements Initializable {
             String email = txtEmail.getText();
 
             if((firstName.equals("") || lastName.equals("") || phone.equals("") || email.equals(""))) {
+                errorInput();
+            } else if (!patternMatches(phone, regexPhone)) {
+                errorPhone();
 
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Input fields empty");
-                alert.setContentText("Please fill all input fields");
-                alert.show();
+                
+            } else if(!patternMatches(email, regexEmail)){
+                errorEmail();
+
             }
             else
             {
@@ -143,6 +154,16 @@ public class Owners implements Initializable {
             alert.show();
         }
         else {
+            if((firstName.equals("") || lastName.equals("") || phone.equals("") || email.equals(""))) {
+                errorInput();
+            } else if (!patternMatches(phone, regexPhone)) {
+                errorPhone();
+
+
+            } else if(!patternMatches(email, regexEmail)){
+                errorEmail();
+            }
+            else
             try{
                 Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
                 conn = DriverManager.getConnection(jdbcURL, user, passwd);
@@ -372,4 +393,22 @@ public class Owners implements Initializable {
         }
     }
 
+    void errorEmail(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid email");
+        alert.setContentText("Please type a valid email");
+        alert.show();
+    }
+    void errorInput(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Input fields empty");
+        alert.setContentText("Please fill all input fields");
+        alert.show();
+    }
+    void errorPhone(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid phone number");
+        alert.setContentText("Please type a valid phone number");
+        alert.show();
+    }
 }
