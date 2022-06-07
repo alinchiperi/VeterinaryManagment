@@ -64,40 +64,52 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <HBox layoutX="26.0" layoutY="314.0" spacing="20.0">
+                  <VBox layoutX="8.0" layoutY="273.0" spacing="20.0">
                      <children>
-                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addOwner" text="ADD" />
-                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#update" text="UPDATE" />
-                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#delete" text="DELETE" />
-                        <Button fx:id="btnComplete" mnemonicParsing="false" onAction="#completeInput" text="Complete" />
+                        <HBox spacing="20.0">
+                           <children>
+                              <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addOwner" prefHeight="53.0" prefWidth="65.0" style="-fx-font-size: 15;" styleClass="buttonform" stylesheets="@../../../css/style.css" text="ADD">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#update" prefHeight="54.0" prefWidth="62.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="UPDATE" />
+                              <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#delete" prefHeight="54.0" prefWidth="63.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="DELETE" />
+                              <Button fx:id="btnComplete" mnemonicParsing="false" onAction="#completeInput" prefHeight="52.0" prefWidth="68.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Complete" />
+                           </children>
+                        </HBox>
+                        <HBox spacing="21.0">
+                           <children>
+                              <Button fx:id="btnFind" mnemonicParsing="false" onAction="#findOwner" prefHeight="50.0" prefWidth="62.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Find" />
+                              <Button fx:id="btnAddPett" mnemonicParsing="false" onAction="#addPet" prefHeight="50.0" prefWidth="66.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Add Pet" />
+                              <Button fx:id="btnViewAll" mnemonicParsing="false" onAction="#viewAllOwners" prefHeight="50.0" prefWidth="62.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="View All " />
+                              <Button fx:id="btnFindPets" mnemonicParsing="false" onAction="#findPets" prefHeight="50.0" prefWidth="72.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Find Pets" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
-                  <HBox layoutX="26.0" layoutY="353.0" spacing="21.0">
-                     <children>
-                        <Button fx:id="btnFind" mnemonicParsing="false" onAction="#findOwner" text="Find" />
-                        <Button fx:id="btnAddPett" mnemonicParsing="false" onAction="#addPet" text="Add Pet" />
-                        <Button fx:id="btnViewAll" mnemonicParsing="false" onAction="#viewAllOwners" text="View All " />
-                        <Button fx:id="btnFindPets" mnemonicParsing="false" onAction="#findPets" text="Find Pets" />
-                     </children>
-                  </HBox>
+                  </VBox>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="399.0" prefWidth="410.0">
                <children>
-                  <TableView fx:id="tblOwners" layoutX="61.0" layoutY="84.0" prefHeight="374.0" prefWidth="444.0" stylesheets="@../../../css/style.css" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columns>
-                      <TableColumn fx:id="colId" prefWidth="54.400025963783264" text="ID" />
-                      <TableColumn fx:id="colFirstName" prefWidth="87.99999237060547" text="First Name" />
-                        <TableColumn fx:id="colLastName" prefWidth="83.199951171875" text="Last Name" />
-                        <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
-                        <TableColumn fx:id="colEmail" prefWidth="141.59994506835938" text="Email" />
-                    </columns>
-                  </TableView>
-                  <Label fx:id="lblTotal" layoutX="14.0" layoutY="374.0" prefHeight="30.0" prefWidth="98.0" text="Total:">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
+                  <VBox>
+                     <children>
+                        <TableView fx:id="tblOwners" prefHeight="374.0" prefWidth="444.0" stylesheets="@../../../css/style.css">
+                          <columns>
+                            <TableColumn fx:id="colId" prefWidth="54.400025963783264" text="ID" />
+                            <TableColumn fx:id="colFirstName" prefWidth="87.99999237060547" text="First Name" />
+                              <TableColumn fx:id="colLastName" prefWidth="83.199951171875" text="Last Name" />
+                              <TableColumn fx:id="colPhone" prefWidth="75.0" text="Phone" />
+                              <TableColumn fx:id="colEmail" prefWidth="141.59994506835938" text="Email" />
+                          </columns>
+                        </TableView>
+                        <Label fx:id="lblTotal" prefHeight="30.0" prefWidth="98.0" text="Total:">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children></AnchorPane>
         </items>
       </SplitPane>

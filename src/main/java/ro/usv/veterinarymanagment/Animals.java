@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import ro.usv.veterinarymanagment.DataModel.Animal;
-import ro.usv.veterinarymanagment.DataModel.Visit;
 
 import java.io.IOException;
 import java.net.URL;
@@ -46,7 +45,7 @@ public class Animals implements Initializable {
     @FXML
     TableColumn<Animal, String>colBday;
     @FXML
-    TableColumn<Animal, Integer>colWeight;
+    TableColumn<Animal, Float>colWeight;
     @FXML
     TableColumn<Animal, String>colSpecies;
     @FXML
@@ -112,6 +111,7 @@ public class Animals implements Initializable {
                 {
                     System.out.println("inserat cu succes");
                     tblAnimals.getItems().add(animal);
+                    setLabelTotal(String.valueOf(getAnimals().size()));
                     clearInput();
                 }
                 else {
@@ -206,6 +206,37 @@ public class Animals implements Initializable {
             }
 
         }
+    }
+    public void findAnimal(){
+        String name = txtName.getText();
+        ObservableList<Animal> list = FXCollections.observableArrayList();
+        if(name.equals("")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Fill name input");
+            alert.setContentText("Please type name of animal");
+            alert.show();
+        }
+        else {
+            try{
+            Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+            conn = DriverManager.getConnection(jdbcURL, user, passwd);
+            stmt = conn.createStatement();
+            String sqlCommand = "Select * from animals_31a_ca where ";
+            sqlCommand += "UPPER('"+ name+"')= UPPER(name) ";
+            rs=stmt.executeQuery(sqlCommand);
+                while (rs.next())
+                {
+                    Animal animal =(new Animal(Integer.parseInt(rs.getString(1)), rs.getString(2),rs.getString(3),rs.getFloat(4),rs.getString(5),rs.getInt(6) ));
+                    list.add(animal);
+                }
+                tblAnimals.setItems(list);
+                setLabelTotal(String.valueOf(list.size()));
+                clearInput();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
     }
     public ObservableList<Animal> getAnimals() {
         ObservableList<Animal> list = FXCollections.observableArrayList();

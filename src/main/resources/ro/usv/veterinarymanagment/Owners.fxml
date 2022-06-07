@@ -64,22 +64,30 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <HBox layoutX="26.0" layoutY="314.0" spacing="20.0">
+                  <VBox layoutX="8.0" layoutY="273.0" spacing="20.0">
                      <children>
-                        <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addOwner" text="ADD" />
-                        <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#update" text="UPDATE" />
-                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#delete" text="DELETE" />
-                        <Button fx:id="btnComplete" mnemonicParsing="false" onAction="#completeInput" text="Complete" />
+                        <HBox spacing="20.0">
+                           <children>
+                              <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addOwner" prefHeight="53.0" prefWidth="65.0" style="-fx-font-size: 15;" styleClass="buttonform" stylesheets="@../../../css/style.css" text="ADD">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#update" prefHeight="54.0" prefWidth="62.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="UPDATE" />
+                              <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#delete" prefHeight="54.0" prefWidth="63.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="DELETE" />
+                              <Button fx:id="btnComplete" mnemonicParsing="false" onAction="#completeInput" prefHeight="52.0" prefWidth="68.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Complete" />
+                           </children>
+                        </HBox>
+                        <HBox spacing="21.0">
+                           <children>
+                              <Button fx:id="btnFind" mnemonicParsing="false" onAction="#findOwner" prefHeight="50.0" prefWidth="62.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Find" />
+                              <Button fx:id="btnAddPett" mnemonicParsing="false" onAction="#addPet" prefHeight="50.0" prefWidth="66.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Add Pet" />
+                              <Button fx:id="btnViewAll" mnemonicParsing="false" onAction="#viewAllOwners" prefHeight="50.0" prefWidth="62.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="View All " />
+                              <Button fx:id="btnFindPets" mnemonicParsing="false" onAction="#findPets" prefHeight="50.0" prefWidth="72.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Find Pets" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
-                  <HBox layoutX="26.0" layoutY="353.0" spacing="21.0">
-                     <children>
-                        <Button fx:id="btnFind" mnemonicParsing="false" onAction="#findOwner" text="Find" />
-                        <Button fx:id="btnAddPett" mnemonicParsing="false" onAction="#addPet" text="Add Pet" />
-                        <Button fx:id="btnViewAll" mnemonicParsing="false" onAction="#viewAllOwners" text="View All " />
-                        <Button fx:id="btnFindPets" mnemonicParsing="false" onAction="#findPets" text="Find Pets" />
-                     </children>
-                  </HBox>
+                  </VBox>
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="399.0" prefWidth="410.0">

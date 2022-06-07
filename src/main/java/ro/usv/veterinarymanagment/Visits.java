@@ -53,6 +53,7 @@ public class Visits implements Initializable {
     @FXML TableColumn<Visit, String>colName;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    ObservableList<String> visitsList = FXCollections.observableArrayList("Control","Vaccin","Ingrijire","Castrare","Operatie","Recuperare");
 
     public void completeIdAnimal(String name)
     {
@@ -236,6 +237,7 @@ public class Visits implements Initializable {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
             conn = DriverManager.getConnection(jdbcURL, user, passwd);
             stmt = conn.createStatement();
+
             String sqlCommand = "select v.*, a.name from visits_31a_ca v, animals_31a_ca a Where v.id_animal=a.id_animal";
             rs = stmt.executeQuery(sqlCommand);
 
@@ -253,7 +255,7 @@ public class Visits implements Initializable {
         return list;
     }
     public void viewPet(ActionEvent event) throws IOException {
-        Parent root ;
+        /*Parent root ;
         Scene scene ;
         Stage stage;
         Visit visitSelected = tblVisits.getSelectionModel().getSelectedItem();
@@ -266,12 +268,43 @@ public class Visits implements Initializable {
             scene= new Scene(root);
             stage.setScene(scene);
             stage.show();
+        }*/
+        ObservableList<Visit> list = FXCollections.observableArrayList();
+        Visit visit = tblVisits.getSelectionModel().getSelectedItem();
+        if(visit==null){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Select a item from table");
+            alert.setContentText("Select a item and press view pet");
+            alert.show();
+        }
+        else {
+            try {
+                Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
+                conn = DriverManager.getConnection(jdbcURL, user, passwd);
+                stmt = conn.createStatement();
+
+
+                String sqlCommand = "select v.*, a.name from visits_31a_ca v, animals_31a_ca a Where v.id_animal=a.id_animal and v.id_animal =" + visit.getAnimalID();
+                rs = stmt.executeQuery(sqlCommand);
+
+                while (rs.next()) {
+                    list.add(new Visit(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+                }
+                tblVisits.setItems(list);
+                lblTotal.setText("Total: " + list.size());
+                stmt.close();
+                rs.close();
+                conn.close();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> visitsList = FXCollections.observableArrayList("Control","Vaccin","Ingrijire");
         cbObs.setItems(visitsList);
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colAnimalId.setCellValueFactory(new PropertyValueFactory<>("animalID"));

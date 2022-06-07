@@ -33,7 +33,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="433.0" prefWidth="326.0">
                <children>
-                  <VBox layoutX="64.0" layoutY="66.0" spacing="30.0">
+                  <VBox layoutX="67.0" layoutY="39.0" spacing="30.0">
                      <children>
                         <HBox spacing="25.0">
                            <children>
@@ -66,17 +66,17 @@
                         </VBox>
                      </children>
                   </VBox>
-                  <HBox layoutX="49.0" layoutY="346.0" spacing="20.0">
+                  <HBox layoutX="45.0" layoutY="294.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#addVisit" text="Add Visit" />
-                        <Button mnemonicParsing="false" onAction="#deleteVisit" text="Delete Visit" />
-                        <Button mnemonicParsing="false" onAction="#updateVisit" text="Update Visit" />
+                        <Button mnemonicParsing="false" onAction="#addVisit" prefHeight="62.0" prefWidth="74.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Add Visit" />
+                        <Button mnemonicParsing="false" onAction="#deleteVisit" prefHeight="64.0" prefWidth="88.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Delete Visit" />
+                        <Button mnemonicParsing="false" onAction="#updateVisit" prefHeight="64.0" prefWidth="88.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Update Visit" />
                      </children>
                   </HBox>
-                  <HBox layoutX="49.0" layoutY="384.0" spacing="20.0">
+                  <HBox layoutX="45.0" layoutY="366.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#completeInput" text="Complete" />
-                        <Button mnemonicParsing="false" onAction="#viewPet" text="View Pet" />
+                        <Button mnemonicParsing="false" onAction="#completeInput" prefHeight="60.0" prefWidth="110.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="Complete" />
+                        <Button mnemonicParsing="false" onAction="#viewPet" prefHeight="58.0" prefWidth="113.0" styleClass="buttonform" stylesheets="@../../../css/style.css" text="View Pet" />
                      </children>
                   </HBox>
                </children>

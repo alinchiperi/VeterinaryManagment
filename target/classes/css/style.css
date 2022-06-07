@@ -35,3 +35,12 @@
  .table-row-cell:selected .text {
         -fx-fill : white ;
  }
+
+ .buttonform{
+ -fx-background-color : #3554a1;
+ -fx-text-fill: white;
+ }
+ .buttonform:hover{
+  -fx-background-color : #5e99ff;
+  -fx-text-fill: black;
+ }

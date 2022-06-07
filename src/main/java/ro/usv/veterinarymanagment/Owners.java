@@ -64,9 +64,9 @@ public class Owners implements Initializable {
 
     String regexEmail = "^(.+)@(.+)$";
     String regexPhone ="^(\\+4|)?(07[0-9]{1}[0-9]{1}|02[0-9]{2}|03[0-9]{2}){1}?(\\s|\\.|\\-)?([0-9]{3}(\\s|\\.|\\-|)){2}$";
-    public static boolean patternMatches(String emailAddress, String regexPattern) {
+    public static boolean patternMatches(String inputForCheck, String regexPattern) {
         return Pattern.compile(regexPattern)
-                .matcher(emailAddress)
+                .matcher(inputForCheck)
                 .matches();
     }
 
@@ -117,6 +117,7 @@ public class Owners implements Initializable {
                     System.out.println("eroare");
                 }
                 tblOwners.getItems().add(owner);
+                setLabelTotal(String.valueOf(getOwners().size()));
 
                 clearInput();
             }
@@ -221,7 +222,6 @@ public class Owners implements Initializable {
                         stmt = conn.createStatement();
 
                         String sqlDelete = "DELETE from owners_31a_ca WHERE id_owner= "+ownerForDelete.getId();
-                        System.out.println(sqlDelete);
 
                         int rezult =stmt.executeUpdate(sqlDelete);
                         if(rezult>0)
@@ -254,7 +254,7 @@ public class Owners implements Initializable {
             Class.forName("oracle.jdbc.driver.OracleDriver").newInstance();
             conn = DriverManager.getConnection(jdbcURL, user, passwd);
             stmt = conn.createStatement();
-            String sqlCommand = "select * from owners_31a_ca";
+            String sqlCommand = "select * from owners_31a_ca order by id_owner";
             rs = stmt.executeQuery(sqlCommand);
             while (rs.next()) {
                 list.add(new Owner(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
@@ -374,7 +374,6 @@ public class Owners implements Initializable {
     public void setLabelTotal(String total){
         lblTotal.setText("Total: "+total);
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
